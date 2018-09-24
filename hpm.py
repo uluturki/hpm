@@ -29,11 +29,22 @@ def generate_network(N, e_k, omega=2.5):
 
     # Assign each node a hidden parameter n_i, they are generated above
     edges = itertools.combinations(range(N), 2)
+    denominator = (n_expected * N)
+    # @TODO might be possible to vectorize if we don't mind about the ram, keep in mind.
     for e in edges:
         # compute probability of connecting two nodes based on equation under
         # Figure 4.18
-        p = ((n_list[e[0]] * n_list[e[1]]) / (n_expected * N))
+        p = ((n_list[e[0]] * n_list[e[1]]) / denominator)
         if rnd.random() < p:
             G.add_edge(*e)
 
     return G
+
+
+if __name__ == '__main__':
+    # Generate the network
+    N = 10000  # Number of nodes
+    e_k = 3.15  # Desired expected degree
+    omega = 2.5  # Desired exponent
+
+    G = generate_network(N=N, e_k=3.15, omega=2.5)
